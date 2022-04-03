@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { IUserWithJobsDone } from '../utils/types';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { signup } from '../redux/slices/userSlice';
+import JobButtonList from '../components/HomePage/JobButtonList';
 
 const HomePage: NextPage<{ user: IUserWithJobsDone }> = ({ user }) => {
 	const dispatch = useAppDispatch();
@@ -24,7 +25,7 @@ const HomePage: NextPage<{ user: IUserWithJobsDone }> = ({ user }) => {
 			</Head>
 
 			<main>
-				<h1 className='text-blue-400'>Hello Kids</h1>
+				<JobButtonList />
 			</main>
 		</div>
 	);
