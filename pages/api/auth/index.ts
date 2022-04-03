@@ -46,7 +46,7 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
 		await db.disconnect();
 
 		// set the cookie to client
-		res.setHeader('Set-Cookie', generateCookie(token));
+		res.setHeader('Set-Cookie', generateCookie(token, 12));
 
 		return resSuccess(res, user);
 	} catch (error) {

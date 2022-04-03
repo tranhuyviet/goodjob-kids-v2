@@ -1,3 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Comic+Neue:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .container {
+      @apply max-w-lg mx-auto text-sm text-gray-700 px-4 font-body tracking-wide;
+  }
+
+  .job-icons {
+      @apply h-12 w-12;
+  }
+
+  .nav-link-active {
+      @apply font-bold text-red-400 tracking-wider;
+  }
+}

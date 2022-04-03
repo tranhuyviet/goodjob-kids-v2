@@ -9,16 +9,21 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@tailwindcss/forms": "^0.5.0",
+		"axios": "^0.26.1",
 		"cookie": "^0.4.2",
+		"formik": "^2.2.9",
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^6.2.9",
 		"next": "12.1.4",
 		"next-connect": "^0.12.2",
 		"react": "18.0.0",
 		"react-dom": "18.0.0",
+		"react-loading": "^2.0.3",
 		"yup": "^0.32.11"
 	},
 	"devDependencies": {
+		"@types/axios": "^0.14.0",
 		"@types/cookie": "^0.4.1",
 		"@types/jsonwebtoken": "^8.5.8",
 		"@types/mongoose": "^5.11.97",

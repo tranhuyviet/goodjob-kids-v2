@@ -18,11 +18,12 @@ export const generateToken = ({ _id, name, userName, totalStars }: IUser): strin
 	return jwt.sign({ _id, name, userName, totalStars }, secret);
 };
 
-export const generateCookie = (token: string): string => {
+export const generateCookie = (token: string, maxAgeMonth: number): string => {
 	return cookie.serialize('goodjobkids', token, {
 		httpOnly: true,
 		secure: true,
 		sameSite: 'strict',
 		path: '/',
+		maxAge: 60 * 60 * 24 * maxAgeMonth,
 	});
 };
