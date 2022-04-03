@@ -17,14 +17,14 @@ const SignupPage = () => {
 		try {
 			setLoading(true);
 			const { data } = await axios.post('/auth', values);
-
+			console.log(data);
 			if (data.status === 'success') {
 				router.push('/');
 				setLoading(false);
 			}
 
 			return;
-		} catch (error) {
+		} catch (error: any) {
 			setErrors(error?.response?.data?.errors);
 			setLoading(false);
 		}
