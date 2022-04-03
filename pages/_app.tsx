@@ -1,8 +1,10 @@
+import { Provider } from 'react-redux';
 import axios from 'axios';
 import '../styles/tailwind.css';
-import jwt from 'jsonwebtoken';
 import type { AppProps } from 'next/app';
 import Layout from '../components/Layout';
+import { store } from '../redux/store';
+
 // axios seting
 const url =
 	process.env.NODE_ENV === 'production'
@@ -15,9 +17,11 @@ axios.defaults.headers.put['Content-Type'] = 'application/json';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	return (
-		<Layout>
-			<Component {...pageProps} />
-		</Layout>
+		<Provider store={store}>
+			<Layout>
+				<Component {...pageProps} />
+			</Layout>
+		</Provider>
 	);
 };
 

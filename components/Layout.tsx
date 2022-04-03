@@ -1,4 +1,6 @@
-import React, { ReactChild } from 'react';
+import { useRouter } from 'next/router';
+import React, { ReactChild, useEffect } from 'react';
+import { useAppSelector } from '../redux/hooks';
 
 import Navbar from './Navbar';
 
@@ -7,6 +9,15 @@ interface IProps {
 }
 
 const Layout = ({ children }: IProps) => {
+	const router = useRouter();
+	const auth = useAppSelector(state => state.auth);
+
+	useEffect(() => {
+		if (!auth.isLoggedin) {
+			router.push('/signup');
+		}
+	});
+
 	console.log('LAYOUT - RENDER');
 
 	return (

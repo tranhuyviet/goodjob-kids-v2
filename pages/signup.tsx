@@ -6,10 +6,13 @@ import ReactLoading from 'react-loading';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import { ISignupBody } from '../utils/types';
+import { useAppDispatch } from '../redux/hooks';
+import { signup } from '../redux/slices/userSlice';
 
 const SignupPage = () => {
 	const [loading, setLoading] = useState(false);
 	const router = useRouter();
+	const dispatch = useAppDispatch();
 
 	const initialValues: ISignupBody = {
 		name: '',
@@ -21,6 +24,7 @@ const SignupPage = () => {
 			const { data } = await axios.post('/auth', values);
 
 			if (data.status === 'success') {
+				dispatch(signup(data.data));
 				router.push('/');
 				setLoading(false);
 			}

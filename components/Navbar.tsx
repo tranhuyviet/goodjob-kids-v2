@@ -2,14 +2,11 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useAppSelector } from '../redux/hooks';
 
 const Navbar = () => {
-	const { pathname } = useRouter();
-
-	const user = {
-		totalStars: 0,
-		name: 'Test',
-	};
+	const router = useRouter();
+	const user = useAppSelector(state => state.auth.user);
 
 	console.log('NAVBAR - RENDER');
 
@@ -19,7 +16,11 @@ const Navbar = () => {
 				<Link href='/'>
 					<a className='hover:cursor-pointer relative hover:nav-link-active' href='href'>
 						<Image src='/images/home.png' width={32} height={32} alt='mop' />
-						<p className={classNames(`text-center ${pathname === '/' ? 'nav-link-active' : ''}`)}>
+						<p
+							className={classNames(
+								`text-center ${router.pathname === '/' ? 'nav-link-active' : ''}`,
+							)}
+						>
 							Home
 						</p>
 					</a>
@@ -38,7 +39,7 @@ const Navbar = () => {
 						</div>
 						<p
 							className={classNames(
-								`text-center ${pathname === '/stars' ? 'nav-link-active' : ''}`,
+								`text-center ${router.pathname === '/stars' ? 'nav-link-active' : ''}`,
 							)}
 						>
 							Stars
@@ -51,7 +52,7 @@ const Navbar = () => {
 						<Image src='/images/history.png' className='' width={32} height={32} alt='mop' />
 						<p
 							className={classNames(
-								`text-center -ml-[6px] ${pathname === '/history' ? 'nav-link-active' : ''}`,
+								`text-center -ml-[6px] ${router.pathname === '/history' ? 'nav-link-active' : ''}`,
 							)}
 						>
 							History
