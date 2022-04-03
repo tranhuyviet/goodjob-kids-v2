@@ -14,7 +14,7 @@ const HomePage: NextPage<{ user: IUserWithJobsDone }> = ({ user }) => {
 		dispatch(signup(user));
 	}
 
-	console.log('HOME PAGE RENDER', user);
+	// console.log('HOME PAGE RENDER');
 
 	return (
 		<div className='container min-h-[calc(100vh-68px)] shadow-md'>

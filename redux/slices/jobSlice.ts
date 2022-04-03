@@ -10,7 +10,9 @@ const jobSlice = createSlice({
 	initialState,
 	reducers: {
 		setJobs: (state, action: PayloadAction<IJob[]>) => {
-			state.jobs = [...action.payload];
+			if (state.jobs.length !== action.payload.length) {
+				state.jobs = [...state.jobs, ...action.payload];
+			}
 		},
 	},
 });

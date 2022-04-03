@@ -1,24 +1,29 @@
+import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import React, { ReactChild, useEffect } from 'react';
-import { useAppSelector } from '../redux/hooks';
-
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import fetchApi from '../utils/fetchApi';
 import Navbar from './Navbar';
+import { setJobs } from '../redux/slices/jobSlice';
 
 interface IProps {
 	children: ReactChild;
 }
 
 const Layout = ({ children }: IProps) => {
-	const router = useRouter();
-	const auth = useAppSelector(state => state.auth);
+	const dispatch = useAppDispatch();
+
+	const { data: jobsData, error: errorJobs } = useSWR('/jobs', fetchApi);
 
 	useEffect(() => {
-		if (!auth.isLoggedin) {
-			router.push('/signup');
+		if (jobsData && jobsData.status === 'success') {
+			dispatch(setJobs(jobsData.data.jobs));
 		}
-	});
+	}, [dispatch, jobsData]);
 
-	console.log('LAYOUT - RENDER');
+	if (errorJobs) return <p>Something went wrong.</p>;
+
+	// console.log('LAYOUT - RENDER', jobsData);
 
 	return (
 		<div className='relative'>

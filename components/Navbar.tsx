@@ -8,7 +8,7 @@ const Navbar = () => {
 	const router = useRouter();
 	const user = useAppSelector(state => state.auth.user);
 
-	console.log('NAVBAR - RENDER');
+	// console.log('NAVBAR - RENDER');
 
 	return (
 		<nav className='h-[68px] container flex justify-between items-center bg-gray-100 shadow-md'>
