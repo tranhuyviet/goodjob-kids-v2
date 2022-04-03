@@ -1,8 +1,8 @@
 import axios from 'axios';
 import '../styles/tailwind.css';
+import jwt from 'jsonwebtoken';
 import type { AppProps } from 'next/app';
 import Layout from '../components/Layout';
-
 // axios seting
 const url =
 	process.env.NODE_ENV === 'production'

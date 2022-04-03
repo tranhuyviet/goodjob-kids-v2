@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import cookie from 'cookie';
+import { serialize } from 'cookie';
 import { IUser } from './types';
 
 const secret = process.env.JWT_SECRET as string;
@@ -19,7 +19,7 @@ export const generateToken = ({ _id, name, userName, totalStars }: IUser): strin
 };
 
 export const generateCookie = (token: string, maxAgeMonth: number): string => {
-	return cookie.serialize('goodjobkids', token, {
+	return serialize('goodjobkids', token, {
 		httpOnly: true,
 		secure: true,
 		sameSite: 'strict',
