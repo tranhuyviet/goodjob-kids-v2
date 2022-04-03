@@ -27,3 +27,12 @@ export const generateCookie = (token: string, maxAgeMonth: number): string => {
 		maxAge: 60 * 60 * 24 * maxAgeMonth,
 	});
 };
+
+export const generateRedirectLink = (token: string, to: string) => {
+	try {
+		jwt.verify(token, secret);
+		return { redirect: { destination: to, permanent: false } };
+	} catch (error) {
+		return { props: {} };
+	}
+};

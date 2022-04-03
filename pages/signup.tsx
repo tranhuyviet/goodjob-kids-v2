@@ -3,7 +3,9 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 import ReactLoading from 'react-loading';
 import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
 import { ISignupBody } from '../utils/types';
+import { generateRedirectLink } from '../utils/generate';
 
 const SignupPage = () => {
 	const [loading, setLoading] = useState(false);
@@ -17,7 +19,7 @@ const SignupPage = () => {
 		try {
 			setLoading(true);
 			const { data } = await axios.post('/auth', values);
-			console.log(data);
+
 			if (data.status === 'success') {
 				router.push('/');
 				setLoading(false);
@@ -64,3 +66,8 @@ const SignupPage = () => {
 };
 
 export default SignupPage;
+
+export const getServerSideProps: GetServerSideProps = async context => {
+	const token = context.req.cookies.goodjobkids;
+	return generateRedirectLink(token, '/');
+};
