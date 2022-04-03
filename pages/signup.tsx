@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 import ReactLoading from 'react-loading';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import { ISignupBody } from '../utils/types';
-import { generateRedirectLink } from '../utils/generate';
 
 const SignupPage = () => {
 	const [loading, setLoading] = useState(false);
@@ -36,6 +36,8 @@ const SignupPage = () => {
 		initialValues,
 		onSubmit,
 	});
+
+	console.log('SIGNUP PAGE RENDER');
 
 	return (
 		<div className='container h-screen shadow-md absolute inset-0 bg-blue-200 flex justify-center items-center'>
@@ -69,5 +71,10 @@ export default SignupPage;
 
 export const getServerSideProps: GetServerSideProps = async context => {
 	const token = context.req.cookies.goodjobkids;
-	return generateRedirectLink(token, '/');
+	try {
+		jwt.verify(token, process.env.JWT_SECRET as string);
+		return { redirect: { destination: '/', permanent: false } };
+	} catch (error) {
+		return { props: {} };
+	}
 };
