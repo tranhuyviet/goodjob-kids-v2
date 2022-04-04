@@ -28,8 +28,6 @@ handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
 			);
 		}
 
-		console.log('USER', user);
-
 		const { jobId } = req.query;
 		const { time } = req.body;
 

@@ -12,16 +12,24 @@ interface IProps {
 
 const Layout = ({ children }: IProps) => {
 	const dispatch = useAppDispatch();
+	const token = useAppSelector(state => state.auth.token);
 
-	const { data: jobsData, error: errorJobs } = useSWR('/jobs', fetchApi);
+	const { data: jobsData, error: errorJobs } = useSWR(token ? ['/jobs', token] : null, fetchApi);
+	const { data: jobsDone, error: errorJobsDone } = useSWR(
+		token ? ['/users/jobsdone', token] : null,
+		fetchApi,
+	);
 
 	useEffect(() => {
 		if (jobsData && jobsData.status === 'success') {
 			dispatch(setJobs(jobsData.data.jobs));
 		}
-	}, [dispatch, jobsData]);
+		if (jobsDone && jobsDone.status === 'success') {
+			console.log(jobsDone);
+		}
+	}, [dispatch, jobsData, jobsDone]);
 
-	if (errorJobs) return <p>Something went wrong.</p>;
+	if (errorJobs || errorJobsDone) return <p>Something went wrong.</p>;
 
 	// console.log('LAYOUT - RENDER', jobsData);
 
