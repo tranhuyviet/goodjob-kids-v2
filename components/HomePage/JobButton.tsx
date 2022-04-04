@@ -11,7 +11,7 @@ interface IJobButton {
 }
 
 const JobButton = ({ job, setIsOpenDialog }: IJobButton) => {
-	const dispatch = useAppDispatch();
+	// const dispatch = useAppDispatch();
 
 	const handleJobClick = async () => {
 		try {

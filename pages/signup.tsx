@@ -41,7 +41,7 @@ const SignupPage = () => {
 		onSubmit,
 	});
 
-	console.log('SIGNUP PAGE RENDER');
+	// console.log('SIGNUP PAGE RENDER');
 
 	return (
 		<div className='container h-screen shadow-md absolute inset-0 bg-blue-200 flex justify-center items-center'>

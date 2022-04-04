@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
+import jwt from 'jsonwebtoken';
 import User from '../../../models/userModel';
 import userService from '../../../services/userService';
 import db from '../../../utils/db';
@@ -42,6 +43,10 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
 
 		const token: string = user.returnToken();
 
+		// eslint-disable-next-line no-param-reassign
+		req.cookies = {
+			token,
+		};
 		// disconnect db
 		await db.disconnect();
 

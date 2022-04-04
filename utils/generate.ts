@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { serialize } from 'cookie';
+import { NextApiRequest } from 'next';
 import { IUser } from './types';
 
 const secret = process.env.JWT_SECRET as string;
@@ -26,4 +27,24 @@ export const generateCookie = (token: string, maxAgeMonth: number): string => {
 		path: '/',
 		maxAge: 60 * 60 * 24 * maxAgeMonth,
 	});
+};
+
+export const generateAuthenticatedUserId = (req: NextApiRequest): string | null => {
+	// get token from headers
+	let token: string;
+	if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+		token = req.headers.authorization.split(' ')[1] as string;
+	} else {
+		return null;
+	}
+
+	// check token is valid
+	try {
+		const user = jwt.verify(token, secret) as IUser;
+
+		// if token is valid, return authenticated user id
+		return user._id;
+	} catch (error) {
+		return null;
+	}
 };
