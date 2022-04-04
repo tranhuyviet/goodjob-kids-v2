@@ -1,8 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
 import jobService from '../../../services/jobService';
+import checkAuth from '../../../utils/checkAuth';
 import db from '../../../utils/db';
 import errorParse from '../../../utils/errorParse';
+import { generateCookie } from '../../../utils/generate';
 
 import { resError, resSuccess } from '../../../utils/returnRes';
 
@@ -13,6 +15,21 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		// connect db
 		await db.connect();
+
+		const user = await checkAuth(req);
+
+		if (!user) {
+			// remove cookie
+			res.setHeader('Set-Cookie', generateCookie('', -1));
+			return resError(
+				res,
+				'Unauthorized',
+				{
+					global: 'You are not logged in',
+				},
+				401,
+			);
+		}
 
 		// get all jobs from database
 		const jobs = await jobService.getJobs();

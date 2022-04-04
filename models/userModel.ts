@@ -15,9 +15,6 @@ const userSchema = new Schema({
 		unique: true,
 		trim: true,
 	},
-	totalStars: {
-		type: Number,
-	},
 	jobsDone: [
 		{
 			jobId: {
@@ -35,7 +32,6 @@ userSchema.methods.returnToken = function returnToken() {
 		_id: this._id,
 		name: this.name,
 		userName: this.userName,
-		totalStars: this.totalStars,
 	});
 };
 

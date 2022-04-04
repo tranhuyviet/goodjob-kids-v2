@@ -5,6 +5,7 @@ import userService from '../../../../services/userService';
 import checkAuth from '../../../../utils/checkAuth';
 import db from '../../../../utils/db';
 import errorParse from '../../../../utils/errorParse';
+import { generateCookie } from '../../../../utils/generate';
 import { resError, resSuccess } from '../../../../utils/returnRes';
 import { IJobDoneBody } from '../../../../utils/types';
 
@@ -18,6 +19,8 @@ handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
 		const user = await checkAuth(req);
 
 		if (!user) {
+			// remove cookie
+			res.setHeader('Set-Cookie', generateCookie('', -1));
 			return resError(
 				res,
 				'Unauthorized',
@@ -44,9 +47,6 @@ handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
 				404,
 			);
 		}
-
-		// update total star
-		user.totalStars += job.star;
 
 		const jobDone: IJobDoneBody = {
 			jobId: Object(jobId),

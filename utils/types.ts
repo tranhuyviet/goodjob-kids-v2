@@ -30,7 +30,6 @@ export interface IUser {
 	_id: string;
 	name: string;
 	userName: string;
-	totalStars: number; // current total stars in jobs done array
 }
 
 export interface IUserWithJobsDone extends IUser {

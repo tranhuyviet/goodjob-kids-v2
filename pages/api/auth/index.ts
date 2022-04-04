@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
-import jwt from 'jsonwebtoken';
 import User from '../../../models/userModel';
 import userService from '../../../services/userService';
 import db from '../../../utils/db';
@@ -36,7 +35,6 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
 		const newUser: IUserDocument = new User({
 			name: name.trim(),
 			userName,
-			totalStars: 0,
 		});
 
 		const user = await userService.create(newUser);
