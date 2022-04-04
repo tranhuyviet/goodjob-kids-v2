@@ -69,6 +69,7 @@ export type IUserDocument = Document &
 	IUser & {
 		jobsDone: IJobDone[];
 		returnToken: () => string;
+		populate: (populateObject: {}) => Promise<IUserDocument>;
 	};
 
 export type IHistoryDocument = Document & IHistoryBody;

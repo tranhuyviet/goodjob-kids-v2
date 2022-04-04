@@ -6,7 +6,7 @@ import { useAppSelector } from '../redux/hooks';
 
 const Navbar = () => {
 	const router = useRouter();
-	const user = useAppSelector(state => state.auth.user);
+	const { user, totalStars } = useAppSelector(state => state.auth);
 
 	// console.log('NAVBAR - RENDER');
 
@@ -35,7 +35,7 @@ const Navbar = () => {
 							<Image src='/images/star.png' width={38} height={38} alt='mop' />
 						</div>
 						<div className='absolute right-0 top-0 w-[38px] h-[38px] flex justify-center items-center'>
-							<p className='text-gray-700 font-bold text-md'>{user.totalStars}</p>
+							<p className='text-gray-700 font-bold text-md'>{totalStars}</p>
 						</div>
 						<p
 							className={classNames(

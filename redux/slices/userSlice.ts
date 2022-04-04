@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import mongoose from 'mongoose';
-import { IUserWithJobsDone } from '../../utils/types';
+import { calculateStars } from '../../utils/generate';
+import { IJobDonePopulated, IUserWithJobsDone } from '../../utils/types';
 
 type IUserPayload = {
 	user: IUserWithJobsDone;
@@ -16,6 +17,7 @@ const initialState = {
 		jobsDone: [],
 	},
 	isLoggedin: false,
+	totalStars: 0,
 	token: '',
 };
 
@@ -28,8 +30,13 @@ const userSlice = createSlice({
 			state.isLoggedin = !!mongoose.Types.ObjectId.isValid(state.user._id);
 			state.token = action.payload.token;
 		},
+
+		setJobsDone: (state, action: PayloadAction<IJobDonePopulated[]>) => {
+			state.user.jobsDone = action.payload;
+			state.totalStars = calculateStars(state.user.jobsDone);
+		},
 	},
 });
 
-export const { signup } = userSlice.actions;
+export const { signup, setJobsDone } = userSlice.actions;
 export default userSlice.reducer;

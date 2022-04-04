@@ -1,10 +1,10 @@
 import useSWR from 'swr';
-import { useRouter } from 'next/router';
 import React, { ReactChild, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import fetchApi from '../utils/fetchApi';
 import Navbar from './Navbar';
 import { setJobs } from '../redux/slices/jobSlice';
+import { setJobsDone } from '../redux/slices/userSlice';
 
 interface IProps {
 	children: ReactChild;
@@ -25,7 +25,7 @@ const Layout = ({ children }: IProps) => {
 			dispatch(setJobs(jobsData.data.jobs));
 		}
 		if (jobsDone && jobsDone.status === 'success') {
-			console.log(jobsDone);
+			dispatch(setJobsDone(jobsDone.data.jobsDone));
 		}
 	}, [dispatch, jobsData, jobsDone]);
 

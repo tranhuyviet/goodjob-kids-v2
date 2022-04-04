@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { serialize } from 'cookie';
 import { NextApiRequest } from 'next';
-import { IUser } from './types';
+import { IJobDonePopulated, IUser } from './types';
 
 const secret = process.env.JWT_SECRET as string;
 
@@ -47,4 +47,13 @@ export const generateAuthenticatedUserId = (req: NextApiRequest): string | null 
 	} catch (error) {
 		return null;
 	}
+};
+
+export const calculateStars = (jobsDone: IJobDonePopulated[]): number => {
+	let totalStars = 0;
+	// eslint-disable-next-line no-restricted-syntax
+	for (const jobDone of jobsDone) {
+		totalStars += jobDone.jobId.star;
+	}
+	return totalStars;
 };
