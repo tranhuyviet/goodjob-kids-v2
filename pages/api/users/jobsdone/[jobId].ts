@@ -32,7 +32,6 @@ handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 
 		const { jobId } = req.query;
-		const { time } = req.body;
 
 		// find the job by jobId
 		const job = await jobService.findJobById(jobId as string);
@@ -50,7 +49,7 @@ handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
 
 		const jobDone: IJobDoneBody = {
 			jobId: Object(jobId),
-			time,
+			time: Date.now().toString(),
 		};
 
 		// add jobdone to array jobsdone and save
