@@ -7,7 +7,7 @@ import errorParse from '../../../utils/errorParse';
 import { generateUserName, generateCookie } from '../../../utils/generate';
 import { resError, resSuccess } from '../../../utils/returnRes';
 import { IUserDocument } from '../../../utils/types';
-import signupValidate from '../../../utils/validate';
+import { signupValidate } from '../../../utils/validate';
 
 const handler = nc();
 
