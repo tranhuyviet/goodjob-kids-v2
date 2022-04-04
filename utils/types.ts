@@ -25,6 +25,11 @@ export interface IJobDonePopulated {
 export type IJobBody = Omit<IJob, '_id'>;
 export type IJobDoneBody = Omit<IJobDone, '_id'>;
 
+export interface IRemoveJobVariables {
+	jobDoneName?: string;
+	jobDoneId?: string;
+}
+
 // USER
 export interface IUser {
 	_id: string;
