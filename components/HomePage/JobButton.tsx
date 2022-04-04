@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { Dispatch, SetStateAction } from 'react';
 import axios from 'axios';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { IJob, IJobDonePopulated } from '../../utils/types';
-// import { addJob } from '../../redux/slices/userSlice';
+import { addJobDone } from '../../redux/slices/userSlice';
 
 interface IJobButton {
 	job: IJob;
@@ -11,27 +11,37 @@ interface IJobButton {
 }
 
 const JobButton = ({ job, setIsOpenDialog }: IJobButton) => {
-	// const dispatch = useAppDispatch();
+	const dispatch = useAppDispatch();
+	const token = useAppSelector(state => state.auth.token);
 
 	const handleJobClick = async () => {
 		try {
-			const { data } = await axios.put(`/users/add-job-done/${job._id}`, { time: Date.now() });
-
-			const newJobDone: IJobDonePopulated = {
-				_id: data.data.jobDoneId,
-				jobId: {
-					name: job.name,
-					image: job.image,
-					star: job.star,
+			const { data } = await axios.put(
+				`/users/jobsdone/${job._id}`,
+				{},
+				{
+					headers: { Authorization: `Bearer ${token}` },
 				},
-				time: Date.now().toString(),
-			};
+			);
 
-			// dispatch(addJob(newJobDone));
+			if (data && data.status === 'success') {
+				const newJobDone: IJobDonePopulated = {
+					_id: data.data.jobDoneId,
+					jobId: {
+						name: job.name,
+						image: job.image,
+						star: job.star,
+					},
+					time: data.data.time,
+				};
 
-			setIsOpenDialog(true);
+				dispatch(addJobDone(newJobDone));
+				setIsOpenDialog(true);
+			}
+
+			return;
 		} catch (error) {
-			console.log('AAAA', error);
+			console.log(error);
 		}
 	};
 

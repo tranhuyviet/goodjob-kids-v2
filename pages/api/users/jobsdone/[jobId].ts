@@ -63,6 +63,7 @@ handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
 		// return job done id have just added to jobsdone array
 		return resSuccess(res, {
 			jobDoneId: updatedUser?.jobsDone[updatedUser.jobsDone.length - 1]._id,
+			time: updatedUser?.jobsDone[updatedUser.jobsDone.length - 1].time,
 		});
 	} catch (error) {
 		if (error instanceof Error && error.name === 'ValidationError') {

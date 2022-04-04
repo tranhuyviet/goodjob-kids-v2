@@ -15,8 +15,8 @@ export const generateUserName = (name: string): string => {
 	return `${name}#${generateRandomNumber(1000, 9999)}`;
 };
 
-export const generateToken = ({ _id, name, userName, totalStars }: IUser): string => {
-	return jwt.sign({ _id, name, userName, totalStars }, secret);
+export const generateToken = ({ _id, name, userName }: IUser): string => {
+	return jwt.sign({ _id, name, userName }, secret);
 };
 
 export const generateCookie = (token: string, maxAgeMonth: number): string => {

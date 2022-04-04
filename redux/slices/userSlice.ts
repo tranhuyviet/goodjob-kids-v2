@@ -42,8 +42,13 @@ const userSlice = createSlice({
 			state.user.jobsDone = action.payload;
 			state.totalStars = calculateStars(state.user.jobsDone);
 		},
+
+		addJobDone: (state, action: PayloadAction<IJobDonePopulated>) => {
+			state.user.jobsDone = [...state.user.jobsDone, action.payload];
+			state.totalStars = calculateStars(state.user.jobsDone);
+		},
 	},
 });
 
-export const { signup, signout, setJobsDone } = userSlice.actions;
+export const { signup, signout, setJobsDone, addJobDone } = userSlice.actions;
 export default userSlice.reducer;
