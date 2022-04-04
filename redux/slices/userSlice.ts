@@ -47,8 +47,15 @@ const userSlice = createSlice({
 			state.user.jobsDone = [...state.user.jobsDone, action.payload];
 			state.totalStars = calculateStars(state.user.jobsDone);
 		},
+
+		removeJobDone: (state, action: PayloadAction<string>) => {
+			state.user.jobsDone = state.user.jobsDone.filter(
+				jobdone => jobdone._id.toString() !== action.payload,
+			);
+			state.totalStars = calculateStars(state.user.jobsDone);
+		},
 	},
 });
 
-export const { signup, signout, setJobsDone, addJobDone } = userSlice.actions;
+export const { signup, signout, setJobsDone, addJobDone, removeJobDone } = userSlice.actions;
 export default userSlice.reducer;
