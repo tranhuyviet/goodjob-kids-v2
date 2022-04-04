@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import moment from 'moment';
+import axios from 'axios';
 import { GetServerSideProps, NextPage } from 'next';
 import jwt from 'jsonwebtoken';
 import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { signup } from '../redux/slices/userSlice';
+import { removeJobDone, signup } from '../redux/slices/userSlice';
 import { IUserWithJobsDone } from '../utils/types';
 
 interface IRemoveJobVariables {
@@ -33,18 +34,23 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 		setVariables({ jobDoneName, jobDoneId });
 	};
 
-	// const confirmYesRemoveJob = (): void => {
-	//     if (variables.jobDoneId) {
-	//         dispatch(removeJob({ jobDoneId: variables.jobDoneId }))
-	//     }
-	//     setIsOpenConfirmDialog(false)
-	//     setVariables(initialVariables)
-	// }
+	const confirmYesRemoveJob = async (): Promise<void> => {
+		if (variables.jobDoneId) {
+			const { data } = await axios.delete(`/users/jobsdone/${variables.jobDoneId}`, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+			if (data.status === 'success') {
+				dispatch(removeJobDone(variables.jobDoneId));
+			}
+			setIsOpenConfirmDialog(false);
+			setVariables(initialVariables);
+		}
+	};
 
-	// const confirmNoRemoveJob = (): void => {
-	//     setIsOpenConfirmDialog(false)
-	//     setVariables(initialVariables)
-	// }
+	const confirmNoRemoveJob = (): void => {
+		setIsOpenConfirmDialog(false);
+		setVariables(initialVariables);
+	};
 	return (
 		<div className='container min-h-[calc(100vh-68px)] shadow-md pt-6'>
 			{jobsDone && jobsDone.length > 0 && (
@@ -65,7 +71,7 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 								</p>
 								<div className='col-span-5 flex items-center'>
 									<Image src={jobDone.jobId.image} width={32} height={32} alt='mop' />
-									<p className='ml-2'>{jobDone.jobId.name}</p>
+									<p className='ml-2 capitalize'>{jobDone.jobId.name}</p>
 								</div>
 								<div className='col-span-2 relative animate-pulse justify-start'>
 									<Image
@@ -77,9 +83,15 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 									/>
 									<p className='absolute top-2 left-4'>{jobDone.jobId.star}</p>
 								</div>
-								<div className='col-span-1 -ml-2 hover:cursor-pointer'>
+								<button
+									type='button'
+									className='col-span-1 -ml-2 hover:cursor-pointer'
+									onClick={() =>
+										handleRemoveJob({ jobDoneName: jobDone.jobId.name, jobDoneId: jobDone._id })
+									}
+								>
 									<Image src='/images/cancel.png' className='' width={20} height={20} alt='mop' />
-								</div>
+								</button>
 							</div>
 						))}
 					</div>
@@ -100,19 +112,39 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 					</div>
 				</>
 			)}
-			{/* {jobsDone && jobsDone.length === 0 && <p className="text-center text-xl mt-4">You have not finished any job yet</p>}
-            {isOpenConfirmDialog && (
-                <div className="absolute inset-0 container max-h-screen flex items-center justify-center backdrop-brightness-[.4]" onClick={confirmNoRemoveJob}>
-                    <div className="w-3/4 h-[160px] bg-green-200 text-center rounded-3xl shadow-2xl">
-                        <p className="text-lg mt-4">{`Are you sure to remove`}</p>
-                        <p className="text-2xl font-bold tracking-wider mt-2">{variables?.jobDoneName} ???</p>
-                        <div className="flex mt-4 justify-end pr-4">
-                            <button className="py-1 px-7 rounded-xl border shadow-md bg-green-600 text-gray-50 text-lg tracking-wider" type="button" onClick={confirmYesRemoveJob}>Yes</button>
-                            <button className="ml-4 py-1 px-7 rounded-xl border shadow-md bg-red-600 text-gray-50 text-lg tracking-wider" type="button" onClick={confirmNoRemoveJob}>No</button>
-                        </div>
-                    </div>
-                </div>
-            )} */}
+			{jobsDone && jobsDone.length === 0 && (
+				<p className='text-center text-xl mt-4'>You have not finished any job yet</p>
+			)}
+			{isOpenConfirmDialog && (
+				<button
+					type='button'
+					className='absolute inset-0 container max-h-screen flex items-center justify-center backdrop-brightness-[.4]'
+					onClick={confirmNoRemoveJob}
+				>
+					<div className='w-3/4 h-[160px] bg-green-200 text-center rounded-3xl shadow-2xl'>
+						<p className='text-lg mt-4'>Are you sure to remove</p>
+						<p className='text-2xl font-bold tracking-wider mt-2 capitalize'>
+							{variables?.jobDoneName} ???
+						</p>
+						<div className='flex mt-4 justify-end pr-4'>
+							<button
+								className='py-1 px-7 rounded-xl border shadow-md bg-green-600 text-gray-50 text-lg tracking-wider'
+								type='button'
+								onClick={confirmYesRemoveJob}
+							>
+								Yes
+							</button>
+							<button
+								className='ml-4 py-1 px-7 rounded-xl border shadow-md bg-red-600 text-gray-50 text-lg tracking-wider'
+								type='button'
+								onClick={confirmNoRemoveJob}
+							>
+								No
+							</button>
+						</div>
+					</div>
+				</button>
+			)}
 		</div>
 	);
 };
