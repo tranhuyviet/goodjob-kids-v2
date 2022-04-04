@@ -12,7 +12,7 @@ import { IJobDoneBody } from '../../../../utils/types';
 const handler = nc();
 
 // add jobdone
-handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
+handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		// connect db
 		await db.connect();

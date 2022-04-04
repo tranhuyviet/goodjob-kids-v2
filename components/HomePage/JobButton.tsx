@@ -16,7 +16,7 @@ const JobButton = ({ job, setIsOpenDialog }: IJobButton) => {
 
 	const handleJobClick = async () => {
 		try {
-			const { data } = await axios.put(
+			const { data } = await axios.post(
 				`/users/jobsdone/${job._id}`,
 				{},
 				{
@@ -41,6 +41,7 @@ const JobButton = ({ job, setIsOpenDialog }: IJobButton) => {
 
 			return;
 		} catch (error) {
+			// eslint-disable-next-line no-console
 			console.log(error);
 		}
 	};
