@@ -58,13 +58,13 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 							<GridRow key={jobDone._id} jobDone={jobDone} handleRemoveJob={handleRemoveJob} />
 						))}
 					</div>
-					<div className='w-full mt-6 flex justify-center'>
+					<div className='w-full mt-6 '>
 						<GotStarsButton totalStars={totalStars} />
 					</div>
 				</>
 			)}
 			{jobsDone && jobsDone.length === 0 && (
-				<p className='text-center text-xl mt-4'>You have not finished any job yet</p>
+				<p className='text-center text-xl mt-4'>You have no any stars. Come on!!!</p>
 			)}
 			{isOpenConfirmDialog && (
 				<ConfirmDialog

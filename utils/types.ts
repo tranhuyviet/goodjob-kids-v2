@@ -55,7 +55,9 @@ export interface IHistory {
 	comment: string;
 }
 
-export type IHistoryBody = Omit<IHistory, '_id'>;
+export interface IHistoryBody {
+	comment: string;
+}
 
 export type IHistoryPopulated = {
 	_id: string;
