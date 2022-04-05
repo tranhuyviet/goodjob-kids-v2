@@ -1,21 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IHistory, IJob } from '../../utils/types';
+import { IHistoryPopulated } from '../../utils/types';
 
 const initialState = {
-	histories: <IHistory[]>[],
+	histories: <IHistoryPopulated[]>[],
 };
 
 const historySlice = createSlice({
 	name: 'histories',
 	initialState,
 	reducers: {
-		setHistories: (state, action: PayloadAction<IHistory[]>) => {
+		setHistories: (state, action: PayloadAction<IHistoryPopulated[]>) => {
 			if (state.histories.length !== action.payload.length) {
 				state.histories = [...action.payload];
 			}
 		},
 
-		addHistory: (state, action: PayloadAction<IHistory>) => {
+		addHistory: (state, action: PayloadAction<IHistoryPopulated>) => {
 			state.histories = [...state.histories, action.payload];
 		},
 	},

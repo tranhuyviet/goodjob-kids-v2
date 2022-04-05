@@ -8,7 +8,7 @@ const GridRow: React.FC<{
 	handleRemoveJob: (arg: IRemoveJobVariables) => void;
 }> = ({ jobDone, handleRemoveJob }) => {
 	return (
-		<div className='grid grid-cols-12 border-l border-r border-b items-center py-2'>
+		<div className='grid grid-cols-12 border-l border-r border-b items-center py-2 '>
 			<p className='text-center col-span-4'>
 				{moment(Number(jobDone.time)).format('h:mm DD.MM.YYYY')}
 			</p>

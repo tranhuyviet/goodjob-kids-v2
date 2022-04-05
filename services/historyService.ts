@@ -1,14 +1,22 @@
 import History from '../models/historyModel';
+import Job from '../models/jobModel';
 import { IHistoryDocument } from '../utils/types';
 
-const create = async (history: IHistoryDocument): Promise<IHistoryDocument> => {
-	return History.create(history);
+const save = async (history: IHistoryDocument): Promise<IHistoryDocument> => {
+	return history.save();
 };
 
 const getHistoriesByUserId = async (userId: string): Promise<IHistoryDocument[]> => {
-	return History.find({ userId });
+	return History.find({ userId }).populate({
+		path: 'jobsDone',
+		populate: {
+			path: 'jobId',
+			model: Job,
+			select: 'name image star',
+		},
+	});
 };
 
-const historyService = { create, getHistoriesByUserId };
+const historyService = { save, getHistoriesByUserId };
 
 export default historyService;

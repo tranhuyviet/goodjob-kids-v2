@@ -76,7 +76,16 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse): Promise<void> =>
 		});
 
 		// save history to database
-		const history = await historyService.create(newHistory);
+		const history = await historyService.save(newHistory);
+
+		await history.populate({
+			path: 'jobsDone',
+			populate: {
+				path: 'jobId',
+				model: Job,
+				select: 'name image star',
+			},
+		});
 
 		// empty array jobsDone in user collection
 		user.jobsDone = [];
