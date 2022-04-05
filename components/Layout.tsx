@@ -5,6 +5,7 @@ import fetchApi from '../utils/fetchApi';
 import Navbar from './Navbar';
 import { setJobs } from '../redux/slices/jobSlice';
 import { setJobsDone } from '../redux/slices/userSlice';
+import { setHistories } from '../redux/slices/historySlice';
 
 interface IProps {
 	children: ReactChild;
@@ -19,6 +20,10 @@ const Layout = ({ children }: IProps) => {
 		token ? ['/users/jobsdone', token] : null,
 		fetchApi,
 	);
+	const { data: historiesData, error: errorHistories } = useSWR(
+		token ? ['/histories', token] : null,
+		fetchApi,
+	);
 
 	useEffect(() => {
 		if (jobsData && jobsData.status === 'success') {
@@ -27,9 +32,12 @@ const Layout = ({ children }: IProps) => {
 		if (jobsDone && jobsDone.status === 'success') {
 			dispatch(setJobsDone(jobsDone.data.jobsDone));
 		}
-	}, [dispatch, jobsData, jobsDone]);
+		if (historiesData && historiesData.status === 'success') {
+			dispatch(setHistories(historiesData.data.histories));
+		}
+	}, [dispatch, jobsData, jobsDone, historiesData]);
 
-	if (errorJobs || errorJobsDone) return <p>Something went wrong.</p>;
+	if (errorJobs || errorJobsDone || errorHistories) return <p>Something went wrong.</p>;
 
 	// console.log('LAYOUT - RENDER', jobsData);
 
