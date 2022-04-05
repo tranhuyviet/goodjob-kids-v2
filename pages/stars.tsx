@@ -64,7 +64,7 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 				</>
 			)}
 			{jobsDone && jobsDone.length === 0 && (
-				<p className='text-center text-xl mt-4'>You have no any stars. Come on!!!</p>
+				<p className='text-center text-xl mt-2'>You have no any stars.</p>
 			)}
 			{isOpenConfirmDialog && (
 				<ConfirmDialog

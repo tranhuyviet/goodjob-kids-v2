@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { IHistoryBody } from '../../utils/types';
 import { setJobsDone } from '../../redux/slices/userSlice';
+import { addHistory } from '../../redux/slices/historySlice';
 
 const GotStarsButton: React.FC<{ totalStars: number }> = ({ totalStars }) => {
+	const router = useRouter();
 	const dispatch = useAppDispatch();
 	const [loading, setLoading] = useState(false);
 	const token = useAppSelector(state => state.auth.token);
@@ -22,9 +25,11 @@ const GotStarsButton: React.FC<{ totalStars: number }> = ({ totalStars }) => {
 				headers: { Authorization: `Bearer ${token}` },
 			});
 			if (data.status === 'success') {
+				dispatch(addHistory(data.data.history));
 				dispatch(setJobsDone([]));
 				setValues(initialValues);
 				setLoading(false);
+				router.push('/history');
 			}
 			return;
 		} catch (error: any) {

@@ -17,9 +17,16 @@ const HistoryPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ use
 
 	return (
 		<div className='container min-h-[calc(100vh-68px)] shadow-md pt-6'>
-			<HistoryTableHeader />
-			{histories &&
-				histories.map(history => <HistoryTableRow key={history._id} history={history} />)}
+			{histories && histories.length > 0 ? (
+				<>
+					<HistoryTableHeader />
+					{histories.map(history => (
+						<HistoryTableRow key={history._id} history={history} />
+					))}
+				</>
+			) : (
+				<p className='text-center text-xl mt-2'>You did not pick up any stars.</p>
+			)}
 		</div>
 	);
 };

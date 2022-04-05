@@ -11,11 +11,15 @@ const historySlice = createSlice({
 	reducers: {
 		setHistories: (state, action: PayloadAction<IHistory[]>) => {
 			if (state.histories.length !== action.payload.length) {
-				state.histories = [...state.histories, ...action.payload];
+				state.histories = [...action.payload];
 			}
+		},
+
+		addHistory: (state, action: PayloadAction<IHistory>) => {
+			state.histories = [...state.histories, action.payload];
 		},
 	},
 });
 
-export const { setHistories } = historySlice.actions;
+export const { setHistories, addHistory } = historySlice.actions;
 export default historySlice.reducer;

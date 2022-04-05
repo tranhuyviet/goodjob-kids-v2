@@ -19,7 +19,7 @@ const HistoryTableRow: React.FC<{ history: IHistory }> = ({ history }) => {
 				<input
 					autoComplete='off'
 					type='text'
-					className=' placeholder:text-gray-400 block w-full rounded-lg shadow-md focus:border-0 focus:ring-green-600 focus:ring-2 h-[38px] tracking-wider text-center'
+					className=' placeholder:text-gray-400 block w-full rounded-lg shadow-xs focus:border-0 focus:ring-green-600 focus:ring-2 h-[38px] tracking-wider text-center'
 					name='comment'
 					placeholder='ex: Buy the toys'
 					value={history.comment}
