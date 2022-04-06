@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { GetServerSideProps, NextPage } from 'next';
 import jwt from 'jsonwebtoken';
+import Link from 'next/link';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { removeJobDone, signup } from '../redux/slices/userSlice';
 import { IRemoveJobVariables, IUserWithJobsDone } from '../utils/types';
@@ -67,7 +68,17 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 				</>
 			)}
 			{jobsDone && jobsDone.length === 0 && (
-				<p className='text-center text-xl mt-2'>You have no any stars.</p>
+				<div className='flex flex-col items-center'>
+					<p className='text-center text-2xl mt-2'>You have no any stars.</p>
+					<Link href='/'>
+						<a
+							className='mt-4 text-base hover:text-green-400 hover:border-green-400 hover:shadow-xl transition-all duration-300 border-green-600 border text-green-600 py-3 px-5 rounded-lg shadow-md tracking-wider flex items-center'
+							href='href'
+						>
+							Back to Home Page to add star
+						</a>
+					</Link>
+				</div>
 			)}
 			{isOpenConfirmDeleteDialog && (
 				<ConfirmDeleteDialog
