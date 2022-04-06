@@ -48,11 +48,11 @@ const ConfirmPickupDialog: React.FC<{
 		<div>
 			<div className='absolute inset-0 container max-h-screen flex items-center justify-center backdrop-brightness-[.4]'>
 				<form
-					className='w-3/4 h-[220px] bg-green-200 text-center rounded-3xl shadow-2xl px-4'
+					className='w-3/4 bg-green-200 text-center rounded-3xl shadow-2xl px-4 py-4'
 					onSubmit={handleSubmit}
 					noValidate
 				>
-					<p className='text-lg mt-6'>Are you sure to pick up {totalStars} stars?</p>
+					<p className='text-lg'>Wanna pick up {totalStars} stars?</p>
 					<div className='mt-4'>
 						<p className='text-gray-600 text-lg '>Short Comment:</p>
 						<input

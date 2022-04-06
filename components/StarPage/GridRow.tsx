@@ -25,7 +25,7 @@ const GridRow: React.FC<{
 				className='col-span-1 -ml-2 hover:cursor-pointer'
 				onClick={() => handleRemoveJob({ jobDoneName: jobDone.jobId.name, jobDoneId: jobDone._id })}
 			>
-				<Image src='/images/close.png' className='' width={38} height={38} alt='mop' />
+				<Image src='/images/bin.png' className='' width={24} height={24} alt='mop' />
 			</button>
 		</div>
 	);
