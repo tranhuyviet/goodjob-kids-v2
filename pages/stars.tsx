@@ -7,8 +7,8 @@ import { removeJobDone, signup } from '../redux/slices/userSlice';
 import { IRemoveJobVariables, IUserWithJobsDone } from '../utils/types';
 import GridHeader from '../components/StarPage/GridHeader';
 import GridRow from '../components/StarPage/GridRow';
-import GotStarsButton from '../components/StarPage/GotStarsButton';
-import ConfirmDialog from '../components/StarPage/ConfirmDialog';
+import ConfirmDeleteDialog from '../components/StarPage/ConfirmDeleteDialog';
+import PickupStarsButton from '../components/StarPage/PickupStarsButton';
 
 const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user, token }) => {
 	const dispatch = useAppDispatch();
@@ -19,7 +19,8 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 		dispatch(signup({ user, token }));
 	}
 
-	const [isOpenConfirmDialog, setIsOpenConfirmDialog] = useState(false);
+	const [isOpenConfirmDeleteDialog, setIsOpenConfirmDeleteDialog] = useState(false);
+
 	const initialVariables: IRemoveJobVariables = {
 		jobDoneName: undefined,
 		jobDoneId: undefined,
@@ -27,7 +28,7 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 	const [variables, setVariables] = useState<IRemoveJobVariables>(initialVariables);
 
 	const handleRemoveJob = ({ jobDoneName, jobDoneId }: IRemoveJobVariables): void => {
-		setIsOpenConfirmDialog(true);
+		setIsOpenConfirmDeleteDialog(true);
 		setVariables({ jobDoneName, jobDoneId });
 	};
 
@@ -39,15 +40,16 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 			if (data.status === 'success') {
 				dispatch(removeJobDone(variables.jobDoneId));
 			}
-			setIsOpenConfirmDialog(false);
+			setIsOpenConfirmDeleteDialog(false);
 			setVariables(initialVariables);
 		}
 	};
 
 	const confirmNoRemoveJob = (): void => {
-		setIsOpenConfirmDialog(false);
+		setIsOpenConfirmDeleteDialog(false);
 		setVariables(initialVariables);
 	};
+
 	return (
 		<div className='container min-h-[calc(100vh-68px)] shadow-md pt-6'>
 			{jobsDone && jobsDone.length > 0 && (
@@ -58,16 +60,17 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 							<GridRow key={jobDone._id} jobDone={jobDone} handleRemoveJob={handleRemoveJob} />
 						))}
 					</div>
-					<div className='w-full mt-6 '>
-						<GotStarsButton totalStars={totalStars} />
+					<div className='w-full mt-8 flex justify-center'>
+						{/* <GotStarsButton totalStars={totalStars} /> */}
+						<PickupStarsButton totalStars={totalStars} />
 					</div>
 				</>
 			)}
 			{jobsDone && jobsDone.length === 0 && (
 				<p className='text-center text-xl mt-2'>You have no any stars.</p>
 			)}
-			{isOpenConfirmDialog && (
-				<ConfirmDialog
+			{isOpenConfirmDeleteDialog && (
+				<ConfirmDeleteDialog
 					confirmNoRemoveJob={confirmNoRemoveJob}
 					confirmYesRemoveJob={confirmYesRemoveJob}
 					variables={variables}

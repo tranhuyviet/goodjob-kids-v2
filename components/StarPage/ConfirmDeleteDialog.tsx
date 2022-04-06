@@ -1,7 +1,7 @@
 import React from 'react';
 import { IRemoveJobVariables } from '../../utils/types';
 
-const ConfirmDialog: React.FC<{
+const ConfirmDeleteDialog: React.FC<{
 	confirmNoRemoveJob: () => void;
 	confirmYesRemoveJob: () => void;
 	variables: IRemoveJobVariables;
@@ -39,4 +39,4 @@ const ConfirmDialog: React.FC<{
 	);
 };
 
-export default ConfirmDialog;
+export default ConfirmDeleteDialog;
