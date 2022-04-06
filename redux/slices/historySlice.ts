@@ -18,8 +18,17 @@ const historySlice = createSlice({
 		addHistory: (state, action: PayloadAction<IHistoryPopulated>) => {
 			state.histories = [...state.histories, action.payload];
 		},
+
+		updateComment: (state, action: PayloadAction<{ historyId: string; comment: string }>) => {
+			state.histories = state.histories.map(history => {
+				if (history._id.toString() === action.payload.historyId) {
+					return { ...history, comment: action.payload.comment };
+				}
+				return history;
+			});
+		},
 	},
 });
 
-export const { setHistories, addHistory } = historySlice.actions;
+export const { setHistories, addHistory, updateComment } = historySlice.actions;
 export default historySlice.reducer;
