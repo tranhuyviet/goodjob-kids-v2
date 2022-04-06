@@ -79,7 +79,7 @@ export type IUserDocument = Document &
 	};
 
 export type IHistoryDocument = Document &
-	IHistoryBody & {
+	IHistory & {
 		save: () => Promise<IHistoryDocument>;
 		populate: (populateObjext: {}) => Promise<IHistoryDocument>;
 	};
