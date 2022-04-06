@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { GetServerSideProps, NextPage } from 'next';
 import jwt from 'jsonwebtoken';
@@ -50,6 +50,10 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 		setIsOpenConfirmDeleteDialog(false);
 		setVariables(initialVariables);
 	};
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 
 	return (
 		<div className='container min-h-[calc(100vh-68px)] shadow-md pt-6'>
