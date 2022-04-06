@@ -68,7 +68,7 @@ const HistoryTableRow: React.FC<{ history: IHistoryPopulated }> = ({ history }) 
 							rows={2}
 							className=' placeholder:text-gray-400 block w-full rounded-lg shadow-xs focus:border-0 focus:ring-green-600 focus:ring-2  tracking-wider m-0 px-2 py-1'
 							name='comment'
-							placeholder='ex: Buy the toys'
+							placeholder='Enter your comment here'
 							value={values.comment}
 							onChange={e => {
 								handleChange(e);
