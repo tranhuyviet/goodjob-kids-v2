@@ -45,7 +45,7 @@ const HistoryTableRow: React.FC<{ history: IHistoryPopulated }> = ({ history }) 
 						width={22}
 						height={22}
 						alt='mop'
-						className={classNames('transition duration-300', toggleDetail ? '' : 'rotate-180')}
+						className={classNames('transition duration-300', toggleDetail ? 'rotate-180' : '')}
 					/>
 				</button>
 			</div>

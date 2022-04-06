@@ -5,7 +5,7 @@ import { IJobDonePopulated } from '../../utils/types';
 
 const StarsDetail: React.FC<{ jobsDone: IJobDonePopulated[] }> = ({ jobsDone }) => {
 	return (
-		<div className='w-full bg-gray-200'>
+		<div className='w-full bg-button '>
 			{jobsDone &&
 				jobsDone.map(jobDone => (
 					<div className='grid grid-cols-12 border-l border-r border-b items-center py-2 border-gray-50'>

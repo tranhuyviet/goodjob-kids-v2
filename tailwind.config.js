@@ -5,6 +5,9 @@ module.exports = {
 			fontFamily: {
 				body: ['Chewy', 'cursive'],
 			},
+			backgroundColor: {
+				button: '#6FC2CB',
+			},
 		},
 	},
 	// eslint-disable-next-line global-require
