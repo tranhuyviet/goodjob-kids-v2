@@ -59,6 +59,19 @@ const Navbar = () => {
 						</p>
 					</a>
 				</Link>
+
+				<Link href='/settings'>
+					<a className='hover:cursor-pointer hover:nav-link-active' href='href'>
+						<Image src='/images/settings.png' className='' width={32} height={32} alt='mop' />
+						<p
+							className={classNames(
+								`text-center -ml-[6px] ${router.pathname === '/settings' ? 'nav-link-active' : ''}`,
+							)}
+						>
+							Settings
+						</p>
+					</a>
+				</Link>
 			</div>
 			<div>
 				<p className='text-red-400 text-xl flex items-center'>
