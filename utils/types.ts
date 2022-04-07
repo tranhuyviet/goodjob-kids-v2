@@ -45,6 +45,10 @@ export interface ISignupBody {
 	name: string;
 }
 
+export interface ILoginByUserName {
+	userName: string;
+}
+
 // HISTORY
 export interface IHistory {
 	_id: string;

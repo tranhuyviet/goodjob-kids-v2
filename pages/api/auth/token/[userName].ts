@@ -6,6 +6,7 @@ import db from '../../../../utils/db';
 import errorParse from '../../../../utils/errorParse';
 import { generateCookie } from '../../../../utils/generate';
 import { resError, resSuccess } from '../../../../utils/returnRes';
+import { userNameValidate } from '../../../../utils/validate';
 
 const handler = nc();
 
@@ -32,6 +33,8 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
 
 		const { userName } = req.query;
 
+		await userNameValidate.validate({ userName }, { abortEarly: false });
+
 		// check userName is correct
 		const userWantToLoggedIn = await userService.findUserByUserName(userName as string);
 
@@ -53,7 +56,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
 		// set the cookie to client
 		res.setHeader('Set-Cookie', generateCookie(token, 12));
 
-		return resSuccess(res, { user: userWantToLoggedIn });
+		return resSuccess(res, { user: userWantToLoggedIn, token });
 	} catch (error) {
 		if (error instanceof Error && error.name === 'ValidationError') {
 			const errors = errorParse(error);
