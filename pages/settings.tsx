@@ -18,7 +18,7 @@ const SettingsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ us
 	return (
 		<div className='container min-h-[calc(100vh-68px)] shadow-md pt-6'>
 			<div className='flex items-center'>
-				<p className='mr-4'>Your name</p>
+				<p className='mr-4'>Your name:</p>
 				<input
 					autoComplete='off'
 					type='text'
@@ -38,7 +38,7 @@ const SettingsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ us
 				</p>
 			</div>
 
-			<div className='p-4 mt-6 shadow-lg flex flex-col justify-center items-center border border-green-600 rounded-md'>
+			<div className='p-4 mt-6 shadow-lg flex flex-col justify-center items-center border border-green-600 rounded-lg'>
 				<p className='mt-2 text-lg'>{`Want to login to someone's account?`}</p>
 				<p className='mt-1 text-base text-gray-500'>{`Enter someone'scode here:`}</p>
 				<input
@@ -46,7 +46,7 @@ const SettingsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ us
 					type='text'
 					className='mt-4 text-center placeholder:text-gray-300 block  rounded-xl shadow-md focus:border-0 focus:ring-green-600 focus:ring-2 h-[42px] tracking-wider w-3/4'
 					name='comment'
-					placeholder='ex: kit#1234'
+					placeholder='ex: kit-1234'
 					// value={user.name}
 					// onChange={handleChange}
 				/>

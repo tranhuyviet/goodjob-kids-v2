@@ -12,7 +12,7 @@ const update = async (user: IUserDocument): Promise<IUserDocument | null> => {
 };
 
 const findUserByUserName = async (userName: string): Promise<IUserDocument | null> => {
-	return User.findOne({ userName });
+	return User.findOne({ userName: userName.trim() });
 };
 
 const findUserByUserId = async (_id: string): Promise<IUserDocument | null> => {

@@ -12,7 +12,7 @@ export const generateRandomNumber = (minRange: number, maxRange: number): number
 };
 
 export const generateUserName = (name: string): string => {
-	return `${name}#${generateRandomNumber(1000, 9999)}`;
+	return `${name}-${generateRandomNumber(1000, 9999)}`;
 };
 
 export const generateToken = ({ _id, name, userName }: IUser): string => {
