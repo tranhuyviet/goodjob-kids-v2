@@ -31,7 +31,7 @@ const LoginForm = () => {
 		try {
 			setLoading(true);
 			handleCloseLoginDialog();
-			const { data } = await axios.get(`/auth/token/${values.userName}`, {
+			const { data } = await axios.post('/auth/token', values, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
 			if (data.status === 'success') {

@@ -11,7 +11,7 @@ import { userNameValidate } from '../../../../utils/validate';
 const handler = nc();
 
 // get token and set cookie
-handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
+handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		// connect db
 		await db.connect();
@@ -31,7 +31,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
 			);
 		}
 
-		const { userName } = req.query;
+		const { userName } = req.body;
 
 		await userNameValidate.validate({ userName }, { abortEarly: false });
 
