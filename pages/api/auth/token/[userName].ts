@@ -43,7 +43,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
 				res,
 				'Not Found',
 				{
-					global: 'Not Found User',
+					global: 'Invalid code, please enter the code again.',
 				},
 				404,
 			);

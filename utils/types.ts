@@ -47,6 +47,7 @@ export interface ISignupBody {
 
 export interface ILoginByUserName {
 	userName: string;
+	global?: string;
 }
 
 // HISTORY

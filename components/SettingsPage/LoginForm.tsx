@@ -30,13 +30,13 @@ const LoginForm = () => {
 	const onSubmit = async (values: ILoginByUserName): Promise<void> => {
 		try {
 			setLoading(true);
+			handleCloseLoginDialog();
 			const { data } = await axios.get(`/auth/token/${values.userName}`, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
 			if (data.status === 'success') {
 				dispatch(signup({ user: data.data.user, token: data.data.token }));
 				setLoading(false);
-				handleCloseLoginDialog();
 			}
 			setValues(initialValues);
 		} catch (error: any) {
@@ -62,10 +62,7 @@ const LoginForm = () => {
 					(Please save your code if you want to login this account again)
 				</p>
 			</div>
-			<form
-				className='p-4 mt-6 shadow-lg flex flex-col justify-center items-center border border-green-600 rounded-lg'
-				onSubmit={handleOpenLoginDialog}
-			>
+			<form className='p-4 mt-6 shadow-lg flex flex-col justify-center items-center border border-green-600 rounded-lg'>
 				<p className='mt-2 text-lg text-green-600 font-bold'>{`Want to login to someone's account?`}</p>
 				<p className='mt-1 text-base text-gray-500'>{`Enter someone'scode here:`}</p>
 
@@ -78,7 +75,9 @@ const LoginForm = () => {
 					value={values.userName}
 					onChange={handleChange}
 				/>
-				{errors && errors.userName && <p className='text-red-500 mt-2'>{errors.userName}</p>}
+				{errors && (errors.userName || errors.global) && (
+					<p className='text-red-500 mt-2'>{errors.userName || errors.global}</p>
+				)}
 
 				<button
 					className={classNames(
