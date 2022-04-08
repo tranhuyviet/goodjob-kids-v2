@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import classNames from 'classnames';
 import ConfirmLoginDialog from './ConfirmLoginDialog';
@@ -51,6 +51,11 @@ const LoginForm = () => {
 			onSubmit,
 			validationSchema: userNameValidate,
 		});
+
+	useEffect(() => {
+		setValues(initialValues);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<div>

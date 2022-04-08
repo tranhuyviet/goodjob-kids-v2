@@ -8,7 +8,7 @@ const name = Yup.string()
 const userName = Yup.string() // username
 	.min(6, 'Invalid code format')
 	.max(17, 'Invalid code format')
-	.required('Code cannot be empty!')
+	.required(' ')
 	.trim()
 	.matches(/^\S(.{0,10}\w)?-\d{4}$/, 'Invalid code format');
 
