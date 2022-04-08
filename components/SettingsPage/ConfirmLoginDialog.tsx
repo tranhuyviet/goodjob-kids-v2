@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactLoading from 'react-loading';
 import { useAppSelector } from '../../redux/hooks';
-import { ILoginByUserName } from '../../utils/types';
 
 const ConfirmLoginDialog: React.FC<{
 	userName: string;

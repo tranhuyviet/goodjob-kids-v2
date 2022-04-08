@@ -11,6 +11,16 @@ const update = async (user: IUserDocument): Promise<IUserDocument | null> => {
 	});
 };
 
+const updateName = async (userId: string, name: string): Promise<IUserDocument | null> => {
+	return User.findByIdAndUpdate(
+		userId,
+		{ name },
+		{
+			new: true,
+		},
+	);
+};
+
 const findUserByUserName = async (userName: string): Promise<IUserDocument | null> => {
 	return User.findOne({ userName: userName.trim() });
 };
@@ -19,6 +29,6 @@ const findUserByUserId = async (_id: string): Promise<IUserDocument | null> => {
 	return User.findById(_id);
 };
 
-const userService = { create, update, findUserByUserName, findUserByUserId };
+const userService = { create, update, updateName, findUserByUserName, findUserByUserId };
 
 export default userService;

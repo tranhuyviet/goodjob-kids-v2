@@ -43,6 +43,7 @@ export interface IUserWithJobsDone extends IUser {
 
 export interface ISignupBody {
 	name: string;
+	global?: string;
 }
 
 export interface ILoginByUserName {

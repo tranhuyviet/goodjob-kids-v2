@@ -1,8 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
 import jwt from 'jsonwebtoken';
-import ReactLoading from 'react-loading';
-import Image from 'next/image';
 import { GetServerSideProps, NextPage } from 'next';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { IUserWithJobsDone } from '../utils/types';
