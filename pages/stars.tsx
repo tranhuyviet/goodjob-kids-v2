@@ -1,24 +1,28 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { GetServerSideProps, NextPage } from 'next';
+import useSWR from 'swr';
 import jwt from 'jsonwebtoken';
 import Link from 'next/link';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { removeJobDone, signup } from '../redux/slices/userSlice';
-import { IRemoveJobVariables, IUserWithJobsDone } from '../utils/types';
+import { removeJobDone, setJobsDone, signup } from '../redux/slices/userSlice';
+import { IJobDonePopulated, IRemoveJobVariables, IUserWithJobsDone } from '../utils/types';
 import GridHeader from '../components/StarPage/GridHeader';
 import GridRow from '../components/StarPage/GridRow';
 import ConfirmDeleteDialog from '../components/StarPage/ConfirmDeleteDialog';
 import PickupStarsButton from '../components/StarPage/PickupStarsButton';
+import fetchApi from '../utils/fetchApi';
 
 const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user, token }) => {
 	const dispatch = useAppDispatch();
-	const jobsDone = useAppSelector(state => state.auth.user.jobsDone);
+
 	const { totalStars, isLoggedin } = useAppSelector(state => state.auth);
 
 	if (!isLoggedin) {
 		dispatch(signup({ user, token }));
 	}
+
+	const { data, error } = useSWR(token ? ['/users/jobsdone', token] : null, fetchApi);
 
 	const [isOpenConfirmDeleteDialog, setIsOpenConfirmDeleteDialog] = useState(false);
 
@@ -26,6 +30,7 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 		jobDoneName: undefined,
 		jobDoneId: undefined,
 	};
+
 	const [variables, setVariables] = useState<IRemoveJobVariables>(initialVariables);
 
 	const handleRemoveJob = ({ jobDoneName, jobDoneId }: IRemoveJobVariables): void => {
@@ -35,10 +40,10 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 
 	const confirmYesRemoveJob = async (): Promise<void> => {
 		if (variables.jobDoneId) {
-			const { data } = await axios.delete(`/users/jobsdone/${variables.jobDoneId}`, {
+			const { data: dataDelete } = await axios.delete(`/users/jobsdone/${variables.jobDoneId}`, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
-			if (data.status === 'success') {
+			if (dataDelete.status === 'success') {
 				dispatch(removeJobDone(variables.jobDoneId));
 			}
 			setIsOpenConfirmDeleteDialog(false);
@@ -54,6 +59,15 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, []);
+
+	if (error) return <p>Fail to load jobs</p>;
+	if (!data) return <p>Loading jobs</p>;
+
+	const jobsDone = data.data.jobsDone as IJobDonePopulated[];
+
+	dispatch(setJobsDone(jobsDone));
+
+	console.log('STARS PAGE - RENDER');
 
 	return (
 		<div className='container min-h-[calc(100vh-68px)] shadow-md pt-6'>
