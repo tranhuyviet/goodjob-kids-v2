@@ -15,7 +15,7 @@ const Layout = ({ children }: IProps) => {
 	const dispatch = useAppDispatch();
 	const token = useAppSelector(state => state.auth.token);
 
-	const { data: jobsData, error: errorJobs } = useSWR(token ? ['/jobs', token] : null, fetchApi);
+	// const { data: jobsData, error: errorJobs } = useSWR(token ? ['/jobs', token] : null, fetchApi);
 	const { data: jobsDone, error: errorJobsDone } = useSWR(
 		token ? ['/users/jobsdone', token] : null,
 		fetchApi,
@@ -26,20 +26,20 @@ const Layout = ({ children }: IProps) => {
 	);
 
 	useEffect(() => {
-		if (jobsData && jobsData.status === 'success') {
-			dispatch(setJobs(jobsData.data.jobs));
-		}
+		// if (jobsData && jobsData.status === 'success') {
+		// 	dispatch(setJobs(jobsData.data.jobs));
+		// }
 		if (jobsDone && jobsDone.status === 'success') {
 			dispatch(setJobsDone(jobsDone.data.jobsDone));
 		}
 		if (historiesData && historiesData.status === 'success') {
 			dispatch(setHistories(historiesData.data.histories));
 		}
-	}, [dispatch, jobsData, jobsDone, historiesData]);
+	}, [dispatch, jobsDone, historiesData]);
 
-	if (errorJobs || errorJobsDone || errorHistories) return <p>Something went wrong.</p>;
+	if (errorJobsDone || errorHistories) return <p>Something went wrong.</p>;
 
-	// console.log('LAYOUT - RENDER', jobsData);
+	console.log('LAYOUT - RENDER');
 
 	return (
 		<div className='relative'>

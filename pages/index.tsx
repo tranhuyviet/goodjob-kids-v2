@@ -1,6 +1,7 @@
-import type { GetServerSideProps, NextPage } from 'next';
+import type { GetServerSideProps, GetStaticProps, NextPage } from 'next';
 import jwt from 'jsonwebtoken';
 import Head from 'next/head';
+import axios from 'axios';
 import { IUserWithJobsDone } from '../utils/types';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { signup } from '../redux/slices/userSlice';

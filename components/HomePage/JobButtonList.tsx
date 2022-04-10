@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import useSWR from 'swr';
 import { useAppSelector } from '../../redux/hooks';
 import JobButton from './JobButton';
+import fetchApi from '../../utils/fetchApi';
+import { IJob } from '../../utils/types';
 
 const JobButtonList = () => {
 	const [isOpenDialog, setIsOpenDialog] = useState(false);
-	const jobs = useAppSelector(state => state.job.jobs);
+	const token = useAppSelector(state => state.auth.token);
+	// const jobs = useAppSelector(state => state.job.jobs);
 	const name = useAppSelector(state => state.auth.user.name);
+	const { data, error } = useSWR(token ? ['/jobs', token] : null, fetchApi);
 
 	useEffect(() => {
 		if (isOpenDialog) {
@@ -15,6 +20,13 @@ const JobButtonList = () => {
 			}, 2000);
 		}
 	}, [isOpenDialog]);
+
+	if (error) return <p>Fail to load jobs</p>;
+	if (!data) return <p>Loading jobs</p>;
+
+	const jobs = data.data.jobs as IJob[];
+
+	console.log('JOB BUTTON LIST - RENDER');
 
 	return (
 		<div className='h-full pt-6'>
