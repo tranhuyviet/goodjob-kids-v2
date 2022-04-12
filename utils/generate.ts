@@ -25,7 +25,7 @@ export const generateCookie = (token: string, maxAgeMonth: number): string => {
 		secure: true,
 		sameSite: 'strict',
 		path: '/',
-		maxAge: 60 * 60 * 24 * maxAgeMonth,
+		maxAge: 1000 * 60 * 60 * 24 * maxAgeMonth,
 	});
 };
 
