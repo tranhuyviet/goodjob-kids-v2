@@ -30,6 +30,7 @@ const ConfirmPickupDialog: React.FC<{
 				dispatch(setJobsDone([]));
 				setValues(initialValues);
 				setLoading(false);
+				handleCloseConfirmPickupDialog();
 				//  router.push('/history');
 			}
 			return;

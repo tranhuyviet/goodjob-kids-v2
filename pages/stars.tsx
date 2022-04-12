@@ -12,6 +12,8 @@ import GridRow from '../components/StarPage/GridRow';
 import ConfirmDeleteDialog from '../components/StarPage/ConfirmDeleteDialog';
 import PickupStarsButton from '../components/StarPage/PickupStarsButton';
 import fetchApi from '../utils/fetchApi';
+import ErrorFetching from '../components/ErrorFetching';
+import Loading from '../components/Loading';
 
 const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user, token }) => {
 	const dispatch = useAppDispatch();
@@ -60,12 +62,14 @@ const StarsPage: NextPage<{ user: IUserWithJobsDone; token: string }> = ({ user,
 		window.scrollTo(0, 0);
 	}, []);
 
-	if (error) return <p>Fail to load jobs</p>;
-	if (!data) return <p>Loading jobs</p>;
+	const jobsDone = data?.data?.jobsDone as IJobDonePopulated[];
 
-	const jobsDone = data.data.jobsDone as IJobDonePopulated[];
+	useEffect(() => {
+		dispatch(setJobsDone(jobsDone || []));
+	}, [dispatch, jobsDone]);
 
-	dispatch(setJobsDone(jobsDone));
+	if (error) return <ErrorFetching />;
+	if (!data) return <Loading />;
 
 	console.log('STARS PAGE - RENDER');
 

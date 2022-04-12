@@ -10,22 +10,6 @@ interface IProps {
 }
 
 const Layout = ({ children }: IProps) => {
-	const dispatch = useAppDispatch();
-	const token = useAppSelector(state => state.auth.token);
-
-	const { data: historiesData, error: errorHistories } = useSWR(
-		token ? ['/histories', token] : null,
-		fetchApi,
-	);
-
-	useEffect(() => {
-		if (historiesData && historiesData.status === 'success') {
-			dispatch(setHistories(historiesData.data.histories));
-		}
-	}, [dispatch, historiesData]);
-
-	if (errorHistories) return <p>Something went wrong.</p>;
-
 	console.log('LAYOUT - RENDER');
 
 	return (

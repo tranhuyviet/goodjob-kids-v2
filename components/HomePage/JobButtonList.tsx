@@ -5,6 +5,8 @@ import { useAppSelector } from '../../redux/hooks';
 import JobButton from './JobButton';
 import fetchApi from '../../utils/fetchApi';
 import { IJob } from '../../utils/types';
+import ErrorFetching from '../ErrorFetching';
+import Loading from '../Loading';
 
 const JobButtonList = () => {
 	const [isOpenDialog, setIsOpenDialog] = useState(false);
@@ -21,8 +23,8 @@ const JobButtonList = () => {
 		}
 	}, [isOpenDialog]);
 
-	if (error) return <p>Fail to load jobs</p>;
-	if (!data) return <p>Loading jobs</p>;
+	if (error) return <ErrorFetching />;
+	if (!data) return <Loading />;
 
 	const jobs = data.data.jobs as IJob[];
 
